@@ -1,5 +1,6 @@
 
 from cgitb import reset
+import string
 import joblib
 import numpy as np # Линейная алгебра
 import pandas as pd # Обработка и анализ данных
@@ -11,8 +12,8 @@ from sklearn.metrics import auc
 import matplotlib.pyplot as plt 
 import seaborn as sns # Статистическая визуализация данных
 import scikitplot as skplt #
-import elas_1 as ec
-import elas3 
+# import elas_1 as ec
+# import elas3 
 from sklearn.model_selection import train_test_split # Разделяет массивы и матрицы в рандомные train and test subsets 
 
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer 
@@ -39,7 +40,7 @@ countvect = CountVectorizer(ngram_range = (2,2), )
 
 
 def pre_Handle():
- df = pd.read_csv("C:\DoAnTotNghiep\spam\data20210902.csv", encoding = 'utf-8',on_bad_lines = 'skip',sep = "|")
+ df = pd.read_csv("C:\Doan\SpamModelAndApi\data20210902.csv", encoding = 'utf-8',on_bad_lines = 'skip',sep = "|")
  df = df.drop(columns=['Unnamed: 0'])
  df.columns = [ 'Message','Label']
  df_labels = df['Label']
@@ -54,17 +55,21 @@ def pre_Handle():
 
 
 
-def Get_Result():
- countvect = pre_Handle()
-#  print("NHẬP TIN:")
-#  arr_input=[input()]
- arr_input_2 = [elas3.es_getString()]
 
- print(elas3.es_getString())
- arr_input_ok = countvect.transform(arr_input_2)
+
+
+def Get_Result(text:string):
+
+ countvect = pre_Handle()
+ print("NHẬP TIN:")
+#  arr_input=[input()]
+#  arr_input_2 = [elas3.es_getString()]
+#  print(elas3.es_getString())
+ arr_input = [text]
+ arr_input_ok = countvect.transform(arr_input)
 
  # arr_result = nam.predict(arr_input)
- loaded_model = joblib.load("C:\DoAnTotNghiep\spam\Spam_model")
+ loaded_model = joblib.load("C:\Doan\SpamModelAndApi\Spam_model")
  arr_result= loaded_model.predict(arr_input_ok)
 
  if (1 in arr_result):
@@ -73,14 +78,17 @@ def Get_Result():
     res_str = "đây là tin nhắn bình thường"
  return(res_str)
 
+
+
+
    
  
 
-def main():
-    Get_Result()
+# def main():
+#     Get_Result()
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
 
 
     

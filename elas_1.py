@@ -6,11 +6,15 @@ import pathlib
 import string
 from tokenize import String
 from elasticsearch import Elasticsearch
-es = Elasticsearch('http://localhost:9200')
+es = Elasticsearch('http://localhost:9200', http_auth=('elastic', 'lgcuaanh'))
+
+
+
+
 
 
 def put_elasticsearch(index_name :string , id_mess : string , content : string ) :
-    resp = es.index(index=index_name, id=id_mess, document=content,REQUEST_TIMEOUT = 40)
+    resp = es.index(index=index_name, id=id_mess, document=doc)
     # print(resp['result'])
  
 
@@ -20,6 +24,6 @@ def get_elasticsearch(index_name :string , id_mess : string , content : string) 
     # print(resp['_source'])
 
 def excute():
-    put_elasticsearch("test_index","2","em ơi đi thôi trời tối rồi đấy")
+    put_elasticsearch("doan_test_res","1","em ơi đi thôi trời tối rồi đấy")
 if __name__ == "__main__":
     excute()
